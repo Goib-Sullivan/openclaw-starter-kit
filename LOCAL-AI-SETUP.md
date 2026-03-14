@@ -14,6 +14,22 @@ With local AI, the model runs on **your computer**. Messages never leave your ma
 
 ---
 
+## Your Hardware
+
+You have an **NVIDIA RTX 4090** with **24GB of video memory (VRAM)** and **64GB of system RAM**. This is one of the best local AI setups possible on consumer hardware. Models will run fast and the quality will be very close to paid cloud models.
+
+Ollama will automatically use your GPU — you don't need to configure anything special. Just make sure your NVIDIA drivers are up to date on Windows (if you play games, they probably already are).
+
+**To update NVIDIA drivers** (if needed):
+1. Open the Windows Start menu
+2. Search for "NVIDIA GeForce Experience" (or go to [https://www.nvidia.com/en-us/geforce/drivers/](https://www.nvidia.com/en-us/geforce/drivers/))
+3. Click "Check for updates" and install any available update
+4. Restart your computer if prompted
+
+WSL2 automatically picks up your Windows NVIDIA drivers — no need to install anything inside Linux.
+
+---
+
 ## Step 1: Install Ollama
 
 Ollama is a free tool that makes running AI models on your computer easy. Think of it as a model manager — it downloads, runs, and manages models for you.
@@ -44,33 +60,23 @@ You should see a version number like `ollama version 0.x.x`.
 
 ## Step 2: Download a Model
 
-Which model you download depends on how much RAM you have. Here's what we recommend:
+With your RTX 4090 (24GB VRAM) and 64GB RAM, here's what we recommend:
 
-### If You Have 64GB RAM (Best Option)
+### Primary Model (Install This One)
 
 ```bash
 ollama pull qwen3.5:32b
 ```
 
-This downloads **Qwen3.5 32B** — the best all-around local model for your hardware. It's excellent at conversation, reasoning, coding help, and writing. The download is about 20GB, so it will take a few minutes depending on your internet speed.
+This downloads **Qwen3.5 32B** — the best all-around local model for your hardware. It runs almost entirely on your GPU, which means fast responses. It's excellent at conversation, reasoning, coding help, and writing. The download is about 20GB.
 
-### If You Have 32GB RAM
-
-```bash
-ollama pull qwen3.5:14b
-```
-
-A smaller but still very capable model. Great for everyday tasks.
-
-### If You Have 16GB RAM
+### Optional: Lightweight Model (For Quick Tasks)
 
 ```bash
 ollama pull qwen3.5:9b
 ```
 
-The most efficient option. Good for simple tasks, quick questions, and casual chat.
-
-> 💡 **Not sure how much RAM you have?** In your Ubuntu terminal, run: `free -h` and look at the "total" number under "Mem".
+A smaller, faster model. Useful for simple questions where you want an instant response. Runs entirely on your GPU with plenty of VRAM to spare.
 
 **What you should see during download:**
 ```
@@ -103,6 +109,18 @@ Hello! What's 2 + 2?
 It should respond conversationally. Type `/bye` to exit the chat.
 
 If this works, your model is ready!
+
+### Verify GPU Is Being Used
+
+While the model is running (or right after), open a **new** Ubuntu terminal and run:
+
+```bash
+nvidia-smi
+```
+
+**What you should see:** A table showing your RTX 4090 with memory being used (something like `18000MiB / 24564MiB`). If you see memory usage, the model is running on your GPU — fast mode. ✅
+
+If `nvidia-smi` shows an error or 0 memory usage, your GPU drivers may need updating (see the "Your Hardware" section above).
 
 ---
 
@@ -148,21 +166,24 @@ This way, 80% of your usage costs nothing, and you have full frontier power when
 
 ## How Local Models Compare to Cloud Models
 
-Here's an honest comparison:
+Here's an honest comparison with your RTX 4090 running Qwen3.5 32B:
 
-| Task | Local (Qwen3.5 32B) | Cloud (Claude Sonnet) |
-|------|---------------------|----------------------|
+| Task | Local (Qwen3.5 32B on 4090) | Cloud (Claude Sonnet) |
+|------|------------------------------|----------------------|
 | Casual conversation | ✅ Great | ✅ Great |
 | Simple questions | ✅ Great | ✅ Great |
+| Response speed | ✅ Very fast (GPU) | ✅ Fast |
 | Writing help | ✅ Good | ✅ Excellent |
 | Web search + summarize | ✅ Good | ✅ Excellent |
-| Complex reasoning | 🟡 Good | ✅ Excellent |
-| Long document analysis | 🟡 Decent | ✅ Excellent |
-| Multi-step tasks | 🟡 Decent | ✅ Excellent |
+| Complex reasoning | ✅ Good | ✅ Excellent |
+| Long document analysis | 🟡 Good | ✅ Excellent |
+| Multi-step tasks | 🟡 Good | ✅ Excellent |
 | Creative writing | ✅ Good | ✅ Excellent |
 | Coding help | ✅ Good | ✅ Excellent |
+| Privacy | ✅ 100% local | 🟡 Data sent to Anthropic |
+| Cost | ✅ Free forever | 💲 Pay-per-use |
 
-**Bottom line:** For 80% of daily use, you won't notice much difference. For the tough stuff, the cloud model is noticeably better.
+**With your RTX 4090**, local performance is closer to cloud than most setups. For 80-90% of daily use, you'll be very happy with the local model. Switch to Sonnet for complex research, long documents, or when precision really matters.
 
 ---
 
