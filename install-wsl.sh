@@ -255,9 +255,9 @@ if step_done "apt-prereqs"; then
 else
     print_step "Installing prerequisites (git, curl, build-essential)..."
 
-    if ! sudo apt install -y git curl build-essential; then
+    if ! sudo apt install -y git curl build-essential zstd; then
         print_fail "Failed to install prerequisites."
-        print_info "Try running manually: sudo apt install -y git curl build-essential"
+        print_info "Try running manually: sudo apt install -y git curl build-essential zstd"
         exit 1
     fi
 
