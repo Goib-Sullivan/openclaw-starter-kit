@@ -130,53 +130,84 @@ echo ""
 echo -e "${GRAY}  Don't have these yet? Cancel (Ctrl+C) and see ACCOUNTS-SETUP.md first.${NC}"
 echo ""
 
-# ── Telegram Bot Token ─────────────────────────────────────────────────
+# ── Load saved answers if they exist ───────────────────────────────────
+SAVED_ANSWERS="$STATE_DIR/user-answers.env"
 BOT_TOKEN=""
-while true; do
-    echo -en "${WHITE}  Enter your Telegram Bot Token (from @BotFather):${NC} "
-    read -r BOT_TOKEN
-    BOT_TOKEN="${BOT_TOKEN// /}"  # strip accidental spaces
+USER_ID=""
+ASSISTANT_NAME=""
 
-    if [[ -z "$BOT_TOKEN" ]]; then
-        print_warn "Bot token cannot be empty."
-        print_info "Get one by messaging @BotFather on Telegram → /newbot"
-        continue
+if [[ -f "$SAVED_ANSWERS" ]]; then
+    source "$SAVED_ANSWERS"
+    if [[ -n "$BOT_TOKEN" && -n "$USER_ID" && -n "$ASSISTANT_NAME" ]]; then
+        print_ok "Using saved answers from previous run:"
+        print_info "  Bot Token: ${BOT_TOKEN:0:10}..."
+        print_info "  User ID: $USER_ID"
+        print_info "  Assistant: $ASSISTANT_NAME"
+        echo ""
+        echo -en "${WHITE}  Use these? [Y/n]:${NC} "
+        read -r USE_SAVED
+        if [[ -z "$USE_SAVED" || "$USE_SAVED" =~ ^[Yy] ]]; then
+            print_ok "Using saved answers"
+        else
+            BOT_TOKEN=""
+            USER_ID=""
+            ASSISTANT_NAME=""
+        fi
+        echo ""
     fi
-    if [[ "$BOT_TOKEN" != *":"* ]]; then
-        print_warn "That doesn't look right. A valid token looks like: 123456789:ABCdef..."
-        print_info "(It must contain a colon : in the middle)"
-        continue
-    fi
-    break
-done
-print_ok "Telegram Bot Token: OK"
-echo ""
+fi
+
+# ── Telegram Bot Token ─────────────────────────────────────────────────
+if [[ -z "$BOT_TOKEN" ]]; then
+    while true; do
+        echo -en "${WHITE}  Enter your Telegram Bot Token (from @BotFather):${NC} "
+        read -r BOT_TOKEN
+        BOT_TOKEN="${BOT_TOKEN// /}"  # strip accidental spaces
+
+        if [[ -z "$BOT_TOKEN" ]]; then
+            print_warn "Bot token cannot be empty."
+            print_info "Get one by messaging @BotFather on Telegram → /newbot"
+            continue
+        fi
+        if [[ "$BOT_TOKEN" != *":"* ]]; then
+            print_warn "That doesn't look right. A valid token looks like: 123456789:ABCdef..."
+            print_info "(It must contain a colon : in the middle)"
+            continue
+        fi
+        break
+    done
+    print_ok "Telegram Bot Token: OK"
+    echo ""
+fi
 
 # ── Telegram User ID ───────────────────────────────────────────────────
-USER_ID=""
-while true; do
-    echo -en "${WHITE}  Enter your Telegram User ID (from @userinfobot):${NC} "
-    read -r USER_ID
-    USER_ID="${USER_ID// /}"
+if [[ -z "$USER_ID" ]]; then
+    while true; do
+        echo -en "${WHITE}  Enter your Telegram User ID (from @userinfobot):${NC} "
+        read -r USER_ID
+        USER_ID="${USER_ID// /}"
 
-    if [[ -z "$USER_ID" ]]; then
-        print_warn "User ID cannot be empty."
-        print_info "Find it by messaging @userinfobot on Telegram."
-        continue
-    fi
-    if ! [[ "$USER_ID" =~ ^[0-9]+$ ]]; then
-        print_warn "User ID must be a number (e.g. 987654321)."
-        print_info "Find it by messaging @userinfobot on Telegram."
-        continue
-    fi
-    break
-done
-print_ok "Telegram User ID: OK"
-echo ""
+        if [[ -z "$USER_ID" ]]; then
+            print_warn "User ID cannot be empty."
+            print_info "Find it by messaging @userinfobot on Telegram."
+            continue
+        fi
+        if ! [[ "$USER_ID" =~ ^[0-9]+$ ]]; then
+            print_warn "User ID must be a number (e.g. 987654321)."
+            print_info "Find it by messaging @userinfobot on Telegram."
+            continue
+        fi
+        break
+    done
+    print_ok "Telegram User ID: OK"
+    echo ""
+fi
 
 # ── Assistant name ────────────────────────────────────────────────────
-echo -en "${WHITE}  What would you like to name your assistant? [Atlas]:${NC} "
-read -r ASSISTANT_NAME
+if [[ -z "$ASSISTANT_NAME" ]]; then
+    echo -en "${WHITE}  What would you like to name your assistant? [Atlas]:${NC} "
+    read -r ASSISTANT_NAME
+fi
 ASSISTANT_NAME="${ASSISTANT_NAME:-Atlas}"
 # Trim whitespace
 ASSISTANT_NAME="$(echo "$ASSISTANT_NAME" | xargs)"
@@ -209,6 +240,14 @@ if [[ "${CONFIRM,,}" != "y" ]]; then
     print_info "Installation cancelled. Re-run anytime: bash /tmp/install-wsl.sh"
     exit 0
 fi
+
+# Save answers for future re-runs
+cat > "$SAVED_ANSWERS" <<ENVEOF
+BOT_TOKEN="$BOT_TOKEN"
+USER_ID="$USER_ID"
+ASSISTANT_NAME="$ASSISTANT_NAME"
+ENVEOF
+chmod 600 "$SAVED_ANSWERS"
 
 echo ""
 echo -e "${GREEN}  Let's go! Starting installation...${NC}"
