@@ -35,12 +35,12 @@ Hello! Can you introduce yourself?
 
 Your assistant will respond with its name and a brief introduction based on what you put in `SOUL.md`.
 
-### 🌐 Try a Web Search
+### 🌐 Try a Web Search (if you set up Brave Search)
 ```
 What's in the news today?
 ```
 
-If you set up a Brave Search API key, your assistant will search the web and summarize the latest news.
+If you set up a Brave Search API key, your assistant will search the web and summarize the latest news. If you didn't set this up yet, that's fine — skip this one for now.
 
 ### 📁 Ask About Files
 ```
@@ -82,11 +82,11 @@ Resets the session more thoroughly. Use if your assistant seems confused or stuc
 ```
 Your assistant will report on its own health — which model it's using, what tools are available, and the current session state.
 
-**What you should see:**
+**What you should see (something like):**
 ```
 🟢 Status: Active
-Model: claude-sonnet-4-5
-Tools: web_search, exec, read, write...
+Model: ollama/qwen3.5:32b
+Tools: exec, read, write...
 Session: [session ID]
 ```
 

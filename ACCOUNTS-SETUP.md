@@ -10,13 +10,15 @@ Open a notepad (Notepad on Windows, or just a text file) and save each key as yo
 
 ## Overview — What You're Creating
 
-| Account | Why You Need It | Cost |
-|---------|----------------|------|
-| Telegram | Chat interface — how you talk to your assistant | Free |
-| Anthropic | The AI brain (Claude) — powers the responses | Pay-as-you-go |
-| GitHub | Community access + code sharing | Free |
-| Brave Search | Web search for your assistant | Free (2,000/mo) |
-| Google (optional) | Gmail integration, Drive backups | Free |
+| Account | Why You Need It | Cost | Required? |
+|---------|----------------|------|-----------|
+| Telegram | Chat interface — how you talk to your assistant | Free | ✅ Yes |
+| GitHub | Community access + downloading this kit | Free | ✅ Yes |
+| Anthropic | Cloud AI brain (Claude) — optional upgrade | Pay-as-you-go | ⬜ Optional |
+| Brave Search | Web search for your assistant | Free (2,000/mo) | ⬜ Optional |
+| Google | Gmail integration, Drive backups | Free | ⬜ Optional |
+
+> 💡 **You're starting with a free local AI model** that runs on your computer (set up in [LOCAL-AI-SETUP.md](LOCAL-AI-SETUP.md)). The Anthropic cloud AI is an optional upgrade you can add later when you want more power for complex tasks.
 
 ---
 
@@ -66,63 +68,7 @@ Open a notepad (Notepad on Windows, or just a text file) and save each key as yo
 
 ---
 
-## Account 2: Anthropic (Claude AI) 🧠
-
-**Why:** Anthropic makes Claude, the AI model that powers your assistant's thinking. You pay for each conversation based on usage — typically $5–20/month for normal use.
-
-### Steps
-
-1. **Sign up** at: [https://console.anthropic.com/](https://console.anthropic.com/)
-   - Click "Sign Up"
-   - Enter your email and create a password
-   - Verify your email
-
-<!-- SCREENSHOT: Anthropic console sign-up page -->
-
-2. **Add a payment method:**
-   - In the console, click on your account name (top right) → **Billing**
-   - Click **Add Payment Method**
-   - Enter your credit/debit card details
-   - Note: You won't be charged until you actually use the API
-
-<!-- SCREENSHOT: Anthropic billing page with Add Payment Method button -->
-
-3. **Set a monthly spending limit** (do this now — important for cost control!):
-   - Still in Billing, look for **Spend Limits** or **Usage Limits**
-   - Set a monthly limit of **$25** to start — you can increase it later
-   - This is your safety net. If the AI runs away, it stops here.
-
-<!-- SCREENSHOT: Anthropic spend limits configuration -->
-
-4. **Create an API key:**
-   - In the console, go to **API Keys** (left sidebar)
-   - Click **Create Key**
-   - Give it a name like `openclaw-home`
-   - Copy the key — it looks like: `sk-ant-api03-...`
-   - ⚠️ **This key will only be shown ONCE.** Copy it to your notepad immediately.
-
-<!-- SCREENSHOT: Anthropic API Keys page with Create Key button -->
-
-5. **Save your API key:**
-   ```
-   Anthropic API Key: sk-ant-api03-...
-   ```
-
-### 💰 What Does This Actually Cost?
-
-| Usage Level | What It Means | Monthly Cost |
-|-------------|--------------|--------------|
-| Light | A few chats per day, simple tasks | $2–5 |
-| Moderate | Regular daily use, web searches, file work | $5–20 |
-| Heavy | All-day use, complex multi-step tasks | $20–50 |
-
-See [COST-GUIDE.md](COST-GUIDE.md) for the full breakdown.
-
-✅ **Done!** You have: an Anthropic account, a spending limit set, and an API key.
-
----
-
-## Account 3: GitHub 🐙
+## Account 2: GitHub 🐙
 
 **Why:** GitHub is where OpenClaw's code and community live. Having an account lets you download this starter kit, report problems, and connect with other users. You won't need to learn how to "code" — just having the account is enough.
 
@@ -146,7 +92,7 @@ See [COST-GUIDE.md](COST-GUIDE.md) for the full breakdown.
 
 ---
 
-## Account 4: Brave Search (Optional but Recommended) 🔍
+## Account 3: Brave Search (Optional but Recommended) 🔍
 
 **Why:** This gives your assistant the ability to search the web. Without it, your assistant can only use information it was trained on — which has a cutoff date. With Brave Search, it can look things up in real time.
 
@@ -179,6 +125,57 @@ See [COST-GUIDE.md](COST-GUIDE.md) for the full breakdown.
 
 ---
 
+## Account 4: Anthropic / Claude AI (Optional) 🧠
+
+**Why:** Anthropic makes Claude, a powerful cloud AI model that's better than local models at complex reasoning, long documents, and precise writing. You pay for each conversation based on usage — typically $5–20/month.
+
+> 💡 **You can skip this for now.** Your local AI model (set up in [LOCAL-AI-SETUP.md](LOCAL-AI-SETUP.md)) handles 80-90% of everyday tasks for free. Come back and set this up whenever you want an upgrade for the tough stuff.
+
+### Steps (when you're ready)
+
+1. **Sign up** at: [https://console.anthropic.com/](https://console.anthropic.com/)
+   - Click "Sign Up"
+   - Enter your email and create a password
+   - Verify your email
+
+2. **Add a payment method:**
+   - Click on your account name (top right) → **Billing**
+   - Click **Add Payment Method**
+   - Enter your credit/debit card details
+   - You won't be charged until you actually use the API
+
+3. **Set a monthly spending limit** (important for cost control!):
+   - Still in Billing, look for **Spend Limits** or **Usage Limits**
+   - Set a monthly limit of **$25** to start — you can increase later
+   - This is your safety net
+
+4. **Create an API key:**
+   - Go to **API Keys** (left sidebar) → **Create Key**
+   - Name it `openclaw-home`
+   - Copy the key — looks like: `sk-ant-api03-...`
+   - ⚠️ **This key will only be shown ONCE.** Copy it immediately.
+
+5. **Save your API key:**
+   ```
+   Anthropic API Key: sk-ant-api03-...
+   ```
+
+6. **Add to OpenClaw:** Run `openclaw configure` in your Ubuntu terminal and add Anthropic as a provider.
+
+### 💰 What Does This Cost?
+
+| Usage Level | Monthly Cost |
+|-------------|-------------|
+| Light (few chats/day) | $2–5 |
+| Moderate (daily use) | $5–20 |
+| Heavy (all-day) | $20–50 |
+
+See [COST-GUIDE.md](COST-GUIDE.md) for full details.
+
+✅ **Optional.** Skip for now — you'll have a fully working assistant with just the local model.
+
+---
+
 ## Account 5: Google Account (Optional) 📧
 
 **Why:** Needed for Gmail integration (read/send emails through your assistant) and Google Drive backups of your workspace. You can absolutely skip this for now and add it later.
@@ -199,13 +196,16 @@ Nothing to do here — just know that Gmail integration will be available when y
 
 ## ✅ Your Pre-Install Checklist
 
-Before moving to [INSTALL-GUIDE.md](INSTALL-GUIDE.md), confirm you have saved:
+Before moving to [INSTALL-GUIDE.md](INSTALL-GUIDE.md), confirm you have:
 
+**Required:**
 - [ ] **Telegram Bot Token** (from @BotFather)
 - [ ] **Your Telegram User ID** (from @userinfobot)
-- [ ] **Anthropic API Key** (from console.anthropic.com)
-- [ ] **Brave Search API Key** (optional but recommended)
-- [ ] **Monthly spending limit set** on Anthropic (strongly recommended)
+- [ ] **GitHub account** created
+
+**Optional (can add later):**
+- [ ] Brave Search API Key
+- [ ] Anthropic API Key + spending limit set
 
 🔒 Keep your notepad safe. These keys are like passwords — never share them.
 

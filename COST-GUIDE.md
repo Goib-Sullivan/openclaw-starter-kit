@@ -1,6 +1,8 @@
-# 💰 Cost Guide — What Does This Actually Cost?
+# 💰 Cost Guide — Optional Cloud AI Upgrade
 
-OpenClaw itself is **free and open source**. Telegram is **free**. The only thing you pay for is the AI model that powers your assistant's responses — and you only pay for what you use.
+**Your current setup is 100% free.** OpenClaw is free, Telegram is free, and your local AI model (Ollama + Qwen3.5) runs on your own computer at zero cost.
+
+This guide covers what happens if you decide to add **Anthropic's Claude** as a cloud upgrade for tasks where you want more power.
 
 ---
 

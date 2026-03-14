@@ -26,7 +26,7 @@ Before you start, make sure you have:
 - [ ] About **45–60 minutes** of uninterrupted time for the first setup
 - [ ] A **notepad** (physical or digital) to save passwords and keys as you create them
 - [ ] Your **phone** nearby (you'll need it to set up Telegram)
-- [ ] A **credit or debit card** (for the Anthropic AI account — you only pay for what you use, typically $5-20/month)
+- [ ] A credit or debit card is **NOT required** — you'll start with a free local AI model. You can optionally add a paid cloud model later.
 
 > 💡 **Best way to read these guides:** View them on GitHub at the link you were given — the formatting will be clean and all links will work. If you downloaded the files instead, you can open `.md` files in any text editor (Notepad works), but they won't look as pretty.
 
@@ -38,12 +38,13 @@ This is a sequential process. Each step depends on the one before it. Don't skip
 
 | # | Step | Guide | Time |
 |---|------|-------|------|
-| 1 | **Create your accounts** — API keys, Telegram bot, GitHub | [ACCOUNTS-SETUP.md](ACCOUNTS-SETUP.md) | ~20 min |
+| 1 | **Create your accounts** — Telegram bot, GitHub, optional API keys | [ACCOUNTS-SETUP.md](ACCOUNTS-SETUP.md) | ~15 min |
 | 2 | **Install WSL2 + OpenClaw** | [INSTALL-GUIDE.md](INSTALL-GUIDE.md) | ~20 min |
-| 3 | **Set up your workspace** — personality, user profile | After install, run `bash setup-workspace.sh` | ~10 min |
-| 4 | **First 30 minutes** — try it out, learn the basics | [FIRST-STEPS.md](FIRST-STEPS.md) | ~15 min |
-| 5 | **Security hardening** — protect your keys and wallet | [SECURITY.md](SECURITY.md) | ~10 min |
-| 6 | **Local AI (optional)** — run a free model on your computer | [LOCAL-AI-SETUP.md](LOCAL-AI-SETUP.md) | ~15 min |
+| 3 | **Set up local AI** — install Ollama and download your models | [LOCAL-AI-SETUP.md](LOCAL-AI-SETUP.md) | ~15 min |
+| 4 | **Set up your workspace** — personality, user profile | After install, run `bash setup-workspace.sh` | ~10 min |
+| 5 | **First 30 minutes** — try it out, learn the basics | [FIRST-STEPS.md](FIRST-STEPS.md) | ~15 min |
+| 6 | **Security hardening** — protect your setup | [SECURITY.md](SECURITY.md) | ~10 min |
+| 7 | **Add cloud AI (optional)** — upgrade to Anthropic Claude for heavy tasks | [COST-GUIDE.md](COST-GUIDE.md) | ~10 min |
 
 ---
 
@@ -56,8 +57,8 @@ This is a sequential process. Each step depends on the one before it. Don't skip
 | [FIRST-STEPS.md](FIRST-STEPS.md) | Your first conversation, commands to try, dashboard tour |
 | [SECURITY.md](SECURITY.md) | Protecting your API keys, locking down your bot, budget limits |
 | [COMMANDS.md](COMMANDS.md) | Quick reference card — every important command in one place |
-| [COST-GUIDE.md](COST-GUIDE.md) | What this costs, usage tiers, how to set spending limits |
-| [LOCAL-AI-SETUP.md](LOCAL-AI-SETUP.md) | Run a free AI model on your own computer (optional) |
+| [LOCAL-AI-SETUP.md](LOCAL-AI-SETUP.md) | Set up your free local AI model (Ollama + your GPU) |
+| [COST-GUIDE.md](COST-GUIDE.md) | Optional: add a cloud AI model, costs, and spending limits |
 | [reference/config-guide.md](reference/config-guide.md) | Configuration file explained field by field |
 | [reference/troubleshooting.md](reference/troubleshooting.md) | Common problems and how to fix them |
 

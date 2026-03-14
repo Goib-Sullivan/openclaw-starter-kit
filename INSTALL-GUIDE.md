@@ -102,7 +102,17 @@ This installs git, which you'll use in Step 7 to download the workspace template
 
 ---
 
-## Step 4: Run the Official OpenClaw Installer
+## Step 4: Install Ollama and Download Your AI Model
+
+Before setting up OpenClaw, let's get your local AI model running. Follow the full guide at **[LOCAL-AI-SETUP.md](LOCAL-AI-SETUP.md)** — it walks you through installing Ollama, downloading the model, and verifying your GPU is being used.
+
+Come back here after you've completed that guide and confirmed the model is working.
+
+> 💡 **This is the step where you set up the AI brain.** It runs on your RTX 4090 GPU, so it's fast and completely free. The download is about 20GB.
+
+---
+
+## Step 5: Run the Official OpenClaw Installer
 
 OpenClaw has an official installer that handles everything automatically — including detecting your Node.js version, installing dependencies, and setting up the initial configuration.
 
@@ -134,7 +144,7 @@ Run 'openclaw onboard --install-daemon' to get started.
 
 ---
 
-## Step 5: Run the Onboarding Wizard
+## Step 6: Run the Onboarding Wizard
 
 This is the guided setup that configures your AI assistant. Have your API keys ready from [ACCOUNTS-SETUP.md](ACCOUNTS-SETUP.md)!
 
@@ -148,8 +158,9 @@ Here's what to expect and how to answer:
 
 | Prompt | What to Enter |
 |--------|--------------|
-| **Anthropic API key** | Your `sk-ant-api03-...` key |
-| **Default model** | `claude-sonnet-4-5` (recommended) or press Enter for default |
+| **Model provider** | Choose **Ollama** (your local AI — free!) |
+| **Ollama base URL** | Press Enter to accept default (`http://127.0.0.1:11434`) |
+| **Default model** | `qwen3.5:32b` |
 | **Telegram bot token** | Your bot token from @BotFather |
 | **Telegram dmPolicy** | Choose `allowlist` (keeps strangers out) |
 | **Telegram groupPolicy** | Choose `allowlist` (controlled group access) |
@@ -157,6 +168,8 @@ Here's what to expect and how to answer:
 | **Workspace location** | Press Enter to accept default (`~/.openclaw/workspace`) |
 | **Install as daemon** | `y` (runs OpenClaw automatically at startup) |
 | **Install skills** | Choose what you want; you can always add more later |
+
+> 💡 **No Anthropic key needed!** You're using your local GPU to run the AI model. You can add Anthropic later as an upgrade — see [ACCOUNTS-SETUP.md](ACCOUNTS-SETUP.md) Account 4.
 
 <!-- SCREENSHOT: Terminal showing the onboarding wizard prompts -->
 
@@ -173,7 +186,7 @@ Here's what to expect and how to answer:
 
 ---
 
-## Step 6: Verify Everything Works
+## Step 7: Verify Everything Works
 
 Run these two commands to confirm your installation is healthy:
 
@@ -181,11 +194,11 @@ Run these two commands to confirm your installation is healthy:
 openclaw doctor
 ```
 
-**What you should see:**
+**What you should see (something like this):**
 ```
 ✓ Node.js: OK (v24.x.x)
 ✓ Config: valid
-✓ Anthropic API: connected
+✓ Ollama: connected
 ✓ Telegram: connected
 ✓ Gateway: running on port 18789
 ✓ All checks passed!
@@ -207,7 +220,7 @@ Sessions: 0 active
 
 ---
 
-## Step 7: Open the Web Dashboard
+## Step 8: Open the Web Dashboard
 
 OpenClaw includes a browser-based control panel. Open it with:
 

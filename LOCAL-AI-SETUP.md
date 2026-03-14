@@ -1,8 +1,8 @@
-# 🧠 Local AI Setup — Run Models on Your Own Computer (Free)
+# 🧠 Local AI Setup — Your Free AI Brain
 
-OpenClaw can use AI models that run entirely on your computer — no API key, no monthly bill, no data leaving your machine. This guide shows you how to set it up.
+This is the core of your setup. You'll install an AI model that runs entirely on your computer — no API key, no monthly bill, no data leaving your machine. With your hardware, it's fast and very capable.
 
-**Requirements:** At least 16GB of RAM. More RAM = bigger (smarter) models.
+**Your hardware:** RTX 4090 (24GB VRAM) + 64GB RAM — one of the best local AI setups on consumer hardware.
 
 ---
 
@@ -143,43 +143,17 @@ If `nvidia-smi` shows an error or 0 memory usage, your GPU drivers may need upda
 
 ---
 
-## Step 4: Connect Ollama to OpenClaw
+## Step 4: You're Done Here — Continue the Install
 
-Now tell OpenClaw about your local model. The easiest way is to use the configure command:
+Your local AI is set up and working! Now head back to **[INSTALL-GUIDE.md](INSTALL-GUIDE.md)** and continue with the OpenClaw setup. When the onboarding wizard asks for your model provider, choose **Ollama** and enter `qwen3.5:32b` as the model.
 
-```bash
-openclaw configure
-```
+### Later: Adding a Cloud Model (Optional Upgrade)
 
-When it asks about model providers, add Ollama with:
-- **Provider type:** Ollama
-- **Base URL:** `http://127.0.0.1:11434`
-- **Model:** `qwen3.5:32b` (or whichever size you downloaded)
+After using your local model for a while, you might want to add Anthropic's Claude for tasks that need more power (complex reasoning, long documents, precise writing). See [ACCOUNTS-SETUP.md](ACCOUNTS-SETUP.md) Account 4 and [COST-GUIDE.md](COST-GUIDE.md) for details.
 
-Then restart:
-```bash
-openclaw gateway restart
-```
-
-### Setting the Local Model as Default
-
-If you want to use the local model for everyday conversations (free!) and only use Anthropic for complex tasks:
-
-You can tell your assistant in chat:
-```
-Use the local model for this conversation.
-```
-
-Or change the default model in your config to `ollama/qwen3.5:32b` using `openclaw configure`.
-
-### Using Both (Recommended Setup)
-
-The best approach is to keep **both** models available:
-
+With both set up, you'd have:
 - **Local model (Qwen3.5)** → Default for everyday chat, simple questions, brainstorming. **Free.**
-- **Anthropic (Claude Sonnet)** → For complex research, long documents, precise writing. **Paid.**
-
-This way, 80% of your usage costs nothing, and you have full frontier power when you need it.
+- **Cloud model (Claude Sonnet)** → For the tough stuff when you need it. **Paid.**
 
 ---
 
