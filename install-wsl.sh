@@ -222,10 +222,21 @@ if step_done "apt-update"; then
 else
     print_step "Updating system packages (this may take a few minutes)..."
 
-    if ! sudo apt update -y; then
-        print_fail "apt update failed."
-        print_info "Check your internet connection and try again."
-        exit 1
+    # Fix known WSL bug: command-not-found package causes segfaults on fresh installs
+    if dpkg -l command-not-found &>/dev/null; then
+        print_info "Removing command-not-found (causes crashes on fresh WSL installs)..."
+        sudo apt remove command-not-found -y 2>/dev/null || true
+    fi
+
+    if ! sudo apt update -y 2>/dev/null; then
+        # Retry once — first apt update on fresh WSL can be flaky
+        print_warn "First apt update had issues, retrying..."
+        sleep 2
+        if ! sudo apt update -y; then
+            print_fail "apt update failed."
+            print_info "Check your internet connection and try again."
+            exit 1
+        fi
     fi
 
     if ! sudo apt upgrade -y; then
