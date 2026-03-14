@@ -70,6 +70,14 @@ ollama pull qwen3.5:32b
 
 This downloads **Qwen3.5 32B** — the best all-around local model for your hardware. It runs almost entirely on your GPU, which means fast responses. It's excellent at conversation, reasoning, coding help, and writing. The download is about 20GB.
 
+### Optional: Coding Model
+
+```bash
+ollama pull qwen2.5-coder:32b
+```
+
+**Qwen2.5-Coder 32B** is specifically trained for programming tasks. It's better than the general model at writing code, debugging, and explaining code. If you plan to do any coding or scripting, this is worth downloading. Also runs on your GPU.
+
 ### Optional: Lightweight Model (For Quick Tasks)
 
 ```bash
@@ -77,6 +85,17 @@ ollama pull qwen3.5:9b
 ```
 
 A smaller, faster model. Useful for simple questions where you want an instant response. Runs entirely on your GPU with plenty of VRAM to spare.
+
+### Which Model for What?
+
+| Task | Best Model |
+|------|-----------|
+| Everyday chat, research, writing | Qwen3.5 32B |
+| Writing code, debugging, scripting | Qwen2.5-Coder 32B |
+| Quick simple questions | Qwen3.5 9B |
+| Complex analysis, long documents | Claude Sonnet (cloud) |
+
+You can switch between models anytime by telling your assistant which one to use, or by changing the default in your config.
 
 **What you should see during download:**
 ```
@@ -253,8 +272,9 @@ Models take up disk space. Here's what to expect:
 | Model | Disk Space |
 |-------|-----------|
 | Qwen3.5 9B | ~6 GB |
-| Qwen3.5 14B | ~9 GB |
 | Qwen3.5 32B | ~20 GB |
+| Qwen2.5-Coder 32B | ~20 GB |
+| All three | ~46 GB total |
 
 To check your available disk space:
 ```bash
