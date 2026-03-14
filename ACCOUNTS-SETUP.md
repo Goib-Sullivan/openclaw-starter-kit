@@ -134,14 +134,9 @@ See [COST-GUIDE.md](COST-GUIDE.md) for the full breakdown.
 
 <!-- SCREENSHOT: GitHub sign-up page -->
 
-2. **That's it for now!** You don't need to create any repositories yet.
+2. **That's it for now!** You don't need to create any repositories or install anything. Just have the account ready.
 
-3. **Install git in WSL** (you'll do this during the install step, but note it now):
-   ```bash
-   sudo apt update && sudo apt install git -y
-   git config --global user.name "Your Name"
-   git config --global user.email "your@email.com"
-   ```
+> 💡 Later, after WSL is set up (in INSTALL-GUIDE.md), you'll install `git` inside your Linux terminal. Don't worry about that now — just create the account.
 
 <!-- SCREENSHOT: GitHub dashboard after sign-up -->
 

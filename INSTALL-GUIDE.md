@@ -54,6 +54,12 @@ WSL2 lets you run Linux commands on your Windows PC. OpenClaw runs inside this L
    ```
    This is your Linux terminal prompt. You're in! The `$` means it's ready for commands.
 
+> 💡 **How to open Ubuntu again later:** Click the Start menu and search for **Ubuntu**. Pin it to your taskbar so you can always find it.
+
+> 💡 **How to paste commands into the terminal:** In the Ubuntu window, **right-click** to paste (Ctrl+V won't work!). You can also use **Ctrl+Shift+V**. To copy text FROM the terminal, highlight it with your mouse and **right-click** or press **Ctrl+Shift+C**.
+
+> 💡 **Forgot your Linux password?** Open PowerShell as Administrator and run: `wsl -u root passwd yourlinuxusername` — this lets you set a new one. Replace `yourlinuxusername` with whatever you typed in step 5.
+
 ### Troubleshooting WSL2 Setup
 - **"Virtualization not enabled"** → You need to enable it in your PC's BIOS/UEFI. Search for your PC model + "enable virtualization" for specific steps.
 - **WSL install seems stuck** → Wait 5 minutes. If nothing happens, restart and try again.
@@ -69,7 +75,11 @@ In your Ubuntu terminal, run:
 sudo apt update && sudo apt upgrade -y
 ```
 
-Enter your Linux password when prompted. This updates your Linux system's software list.
+> 💡 Remember: **right-click** to paste commands into the terminal.
+
+> Don't worry about the `&&` and `-y` in this command — just copy and paste the whole line exactly as shown. It updates your system software.
+
+Enter your Linux password when prompted. **Nothing will appear on screen as you type the password — that's normal.** Just type it and press Enter.
 
 **What you should see:** A lot of text scrolling by, ending with something like:
 ```
@@ -80,7 +90,17 @@ Enter your Linux password when prompted. This updates your Linux system's softwa
 
 ---
 
-## Step 3: Run the Official OpenClaw Installer
+## Step 3: Install Git (For Cloning This Kit Later)
+
+```bash
+sudo apt install git -y
+```
+
+This installs git, which you'll use in Step 7 to download the workspace templates.
+
+---
+
+## Step 4: Run the Official OpenClaw Installer
 
 OpenClaw has an official installer that handles everything automatically — including detecting your Node.js version, installing dependencies, and setting up the initial configuration.
 
@@ -112,7 +132,7 @@ Run 'openclaw onboard --install-daemon' to get started.
 
 ---
 
-## Step 4: Run the Onboarding Wizard
+## Step 5: Run the Onboarding Wizard
 
 This is the guided setup that configures your AI assistant. Have your API keys ready from [ACCOUNTS-SETUP.md](ACCOUNTS-SETUP.md)!
 
@@ -149,7 +169,7 @@ The wizard will walk you through each setting with prompts. Here's what to expec
 
 ---
 
-## Step 5: Verify Everything Works
+## Step 6: Verify Everything Works
 
 Run these two commands to confirm your installation is healthy:
 
@@ -183,7 +203,7 @@ Sessions: 0 active
 
 ---
 
-## Step 6: Open the Web Dashboard
+## Step 7: Open the Web Dashboard
 
 OpenClaw includes a browser-based control panel. Open it with:
 
@@ -205,7 +225,7 @@ You can also chat with your assistant directly from the dashboard — no Telegra
 
 ---
 
-## Step 7: Copy Workspace Templates
+## Step 8: Copy Workspace Templates
 
 Your workspace is where your assistant's personality, memory, and instructions live. This kit includes starter templates.
 
@@ -224,7 +244,7 @@ cd /mnt/c/Users/YourWindowsUsername/Downloads/openclaw-starter-kit
 
 > 💡 **Cloning inside WSL is faster and avoids path issues.** From your Ubuntu terminal:
 > ```bash
-> cd ~ && git clone https://github.com/YOUR-REPO/openclaw-starter-kit.git
+> cd ~ && git clone https://github.com/Goib-Sullivan/openclaw-starter-kit.git
 > ```
 
 Then run:
@@ -249,6 +269,12 @@ Now open the files and fill them in:
 ```bash
 nano ~/.openclaw/workspace/USER.md
 ```
+
+> 💡 **First time using nano?** It looks different from a normal text editor — that's okay! There's no mouse support. Use **arrow keys** to move around. Type normally to add text. When you're done:
+> - **Ctrl+O** then **Enter** → Save
+> - **Ctrl+X** → Exit
+> - **Ctrl+K** → Delete a whole line
+
 Replace the placeholder text with your actual name, timezone, etc.
 
 ---
