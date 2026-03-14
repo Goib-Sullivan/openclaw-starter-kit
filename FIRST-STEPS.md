@@ -14,7 +14,9 @@ You have two ways to talk to your assistant:
 Open Telegram on your phone or desktop and find the bot you created during setup (search for your bot's username, e.g., `@myassistant_bot`). Start a chat and say hello!
 
 ### Option B: Web Dashboard
-Open your browser and go to: **http://127.0.0.1:18789/**
+Open your Windows web browser (Chrome, Edge, etc.) and go to: **http://127.0.0.1:18789/**
+
+> This is a local address — it only works on your computer. It's not a public website.
 
 Click the chat interface in the dashboard. Great for when you're at your computer and don't want to switch apps.
 

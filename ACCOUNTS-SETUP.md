@@ -4,6 +4,8 @@ Set up every account you'll need **before** installing anything. This takes abou
 
 Open a notepad (Notepad on Windows, or just a text file) and save each key as you create it. You'll need them during install.
 
+> 💡 **What's an API key?** Think of it like a password that lets one app talk to another. Your assistant needs API keys to connect to services like the AI brain (Anthropic) and web search (Brave). You create them once, paste them during setup, and then forget about them.
+
 ---
 
 ## Overview — What You're Creating
@@ -12,7 +14,7 @@ Open a notepad (Notepad on Windows, or just a text file) and save each key as yo
 |---------|----------------|------|
 | Telegram | Chat interface — how you talk to your assistant | Free |
 | Anthropic | The AI brain (Claude) — powers the responses | Pay-as-you-go |
-| GitHub | Version control + community access | Free |
+| GitHub | Community access + code sharing | Free |
 | Brave Search | Web search for your assistant | Free (2,000/mo) |
 | Google (optional) | Gmail integration, Drive backups | Free |
 
@@ -37,7 +39,7 @@ Open a notepad (Notepad on Windows, or just a text file) and save each key as yo
 
 <!-- SCREENSHOT: Telegram sign-up screen with phone number field -->
 
-3. **Create a Bot** — this is how OpenClaw connects to Telegram:
+3. **Create a Bot** — a bot is an automated Telegram account that your assistant uses to send and receive messages. Here's how to make one:
    - In Telegram, search for **@BotFather** (it has a blue checkmark ✅)
    - Start a chat with BotFather
    - Send the message: `/newbot`
@@ -122,7 +124,7 @@ See [COST-GUIDE.md](COST-GUIDE.md) for the full breakdown.
 
 ## Account 3: GitHub 🐙
 
-**Why:** GitHub is where OpenClaw's code lives. You'll use it to save your configuration (safely, without secrets) and connect with the community. Also useful if you want to back up your workspace.
+**Why:** GitHub is where OpenClaw's code and community live. Having an account lets you download this starter kit, report problems, and connect with other users. You won't need to learn how to "code" — just having the account is enough.
 
 ### Steps
 

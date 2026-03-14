@@ -139,6 +139,25 @@ After your first full week of use, check your usage graph on Anthropic's console
 
 ---
 
+## How to Pause or Stop (Stop All Charges)
+
+If you want to stop paying entirely — maybe you're going on vacation or just want a break:
+
+**Pause (stop charges, keep everything intact):**
+```bash
+openclaw gateway stop
+```
+Your assistant goes to sleep. No messages processed = no charges. Start it again anytime with `openclaw gateway start`.
+
+**Full stop (remove all charges permanently):**
+1. Stop the gateway: `openclaw gateway stop`
+2. Revoke your API key: go to console.anthropic.com → API Keys → delete the key
+3. That's it — with no valid API key, nothing can run and nothing can be charged
+
+Your workspace files, personality, and memory are all saved locally on your computer. They don't go anywhere. You can always start again later by creating a new API key.
+
+---
+
 ## Free Alternatives to Consider
 
 If costs become a concern:

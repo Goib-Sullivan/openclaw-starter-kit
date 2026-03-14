@@ -19,12 +19,16 @@ OpenClaw is an open platform for running AI assistants on your own machine. Inst
 
 ## 📋 Pre-Flight Checklist
 
-Before you start installing anything, make sure you have:
+Before you start, make sure you have:
 
 - [ ] A **Windows PC** (Windows 10 version 2004 or later, or Windows 11)
 - [ ] An **internet connection**
 - [ ] About **45–60 minutes** of uninterrupted time for the first setup
-- [ ] A **notepad** (physical or digital) to save API keys as you create them
+- [ ] A **notepad** (physical or digital) to save passwords and keys as you create them
+- [ ] Your **phone** nearby (you'll need it to set up Telegram)
+- [ ] A **credit or debit card** (for the Anthropic AI account — you only pay for what you use, typically $5-20/month)
+
+> 💡 **Best way to read these guides:** View them on GitHub at the link you were given — the formatting will be clean and all links will work. If you downloaded the files instead, you can open `.md` files in any text editor (Notepad works), but they won't look as pretty.
 
 ---
 

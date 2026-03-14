@@ -6,6 +6,8 @@ This guide installs everything you need on a Windows PC. The process uses WSL2 (
 
 Estimated time: **20–30 minutes**
 
+> 📝 **A note about "What you should see":** Throughout this guide, we show you what the screen should look like after each step. Your output might look *slightly* different — different version numbers, different wording. **That's fine.** As long as you don't see error messages or red text, you're on track.
+
 ---
 
 ## Step 1: Enable WSL2 on Windows
@@ -140,7 +142,9 @@ This is the guided setup that configures your AI assistant. Have your API keys r
 openclaw onboard --install-daemon
 ```
 
-The wizard will walk you through each setting with prompts. Here's what to expect and how to answer:
+The wizard will walk you through each setting one at a time. It will ask questions and wait for your answer. Sometimes you type your answer, sometimes you pick from a numbered list. Just follow the prompts — there are no trick questions.
+
+Here's what to expect and how to answer:
 
 | Prompt | What to Enter |
 |--------|--------------|
@@ -211,7 +215,9 @@ OpenClaw includes a browser-based control panel. Open it with:
 openclaw dashboard
 ```
 
-Or open your browser and go to: **http://127.0.0.1:18789/**
+Or open your **Windows web browser** (Chrome, Edge, Firefox) and type this in the address bar: **http://127.0.0.1:18789/**
+
+> 💡 This is a **local address** — it only works on your own computer. Nobody else can see it. If a browser doesn't open automatically from the terminal command, just open it yourself and type the address above.
 
 <!-- SCREENSHOT: OpenClaw web dashboard showing gateway status and session list -->
 
@@ -225,32 +231,21 @@ You can also chat with your assistant directly from the dashboard — no Telegra
 
 ---
 
-## Step 8: Copy Workspace Templates
+## Step 8: Download and Install Workspace Templates
 
-Your workspace is where your assistant's personality, memory, and instructions live. This kit includes starter templates.
+Your workspace is where your assistant's personality, memory, and instructions live. This starter kit includes templates to get you started.
 
-First, navigate to the starter kit directory.
+**Run these two commands** (copy and paste each one, pressing Enter after each):
 
-**If you cloned it via git inside WSL** (recommended):
 ```bash
-cd ~/openclaw-starter-kit
+cd ~ && git clone https://github.com/Goib-Sullivan/openclaw-starter-kit.git
 ```
 
-**If you downloaded the zip to your Windows Downloads folder:**
 ```bash
-cd /mnt/c/Users/YourWindowsUsername/Downloads/openclaw-starter-kit
+cd ~/openclaw-starter-kit && bash setup-workspace.sh
 ```
-(Replace `YourWindowsUsername` with your actual Windows username.)
 
-> 💡 **Cloning inside WSL is faster and avoids path issues.** From your Ubuntu terminal:
-> ```bash
-> cd ~ && git clone https://github.com/Goib-Sullivan/openclaw-starter-kit.git
-> ```
-
-Then run:
-```bash
-bash setup-workspace.sh
-```
+The first command downloads the starter kit. The second installs the template files.
 
 **What you should see:**
 ```
