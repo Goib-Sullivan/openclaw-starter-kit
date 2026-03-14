@@ -201,6 +201,13 @@ Your assistant can browse the web, read and write files, run commands, and more 
 ### It Runs in the Background
 Once installed as a daemon, OpenClaw keeps running even when you close the Ubuntu terminal. It will still respond to Telegram messages. To check: run `openclaw status` in a new terminal.
 
+### Accessing WSL Files from Windows
+You can browse your Linux files from Windows Explorer! Type this in the Windows Explorer address bar:
+```
+\\wsl$\Ubuntu\home\yourlinuxusername\.openclaw\workspace
+```
+This lets you edit workspace files (SOUL.md, USER.md, etc.) with any Windows text editor like Notepad or VS Code.
+
 ---
 
 ## What's Next?

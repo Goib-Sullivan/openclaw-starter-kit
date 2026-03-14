@@ -167,13 +167,13 @@ See [COST-GUIDE.md](COST-GUIDE.md) for the full breakdown.
    - After signing in, go to your dashboard
    - Find **API Keys** → **Create New Key**
    - Name it `openclaw`
-   - Copy the key (starts with `BSA...` or similar)
+   - Copy the key
 
 <!-- SCREENSHOT: Brave Search API dashboard with key creation -->
 
 3. **Save your key:**
    ```
-   Brave Search API Key: BSA...
+   Brave Search API Key: [your key here]
    ```
 
 4. **Check your plan:** Free tier gives 2,000 queries/month. That's about 65 web searches per day — more than enough for personal use.

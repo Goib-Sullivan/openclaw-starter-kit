@@ -66,10 +66,16 @@ nano ~/.openclaw/openclaw.json
 ```
 
 Look for the `model` field and change it:
-```json
-"model": "claude-haiku-4-5"    // cheapest
-"model": "claude-sonnet-4-5"   // recommended (default)
-"model": "claude-opus-4-5"     // best quality, most expensive
+The easiest way to change your model is:
+```bash
+openclaw configure
+```
+
+Or, if you want to edit manually, the model strings include the provider prefix:
+```
+anthropic/claude-haiku-4-5     (cheapest)
+anthropic/claude-sonnet-4-5    (recommended default)
+anthropic/claude-opus-4-5      (best quality, most expensive)
 ```
 
 ---

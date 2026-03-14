@@ -35,36 +35,44 @@ openclaw doctor
 
 ---
 
-## Top-Level Fields
+## Understanding the Structure
 
-### `model`
-The default AI model used for conversations.
+OpenClaw's config is nested. The onboarding wizard generates this automatically, but here's how it's organized so you can find things when editing:
 
-```json
-"model": "claude-sonnet-4-5"
 ```
-
-| Value | Description |
-|-------|-------------|
-| `"claude-haiku-4-5"` | Fastest and cheapest. Good for simple tasks. |
-| `"claude-sonnet-4-5"` | ✅ Recommended. Best balance of quality and cost. |
-| `"claude-opus-4-5"` | Highest quality, most expensive. For complex work. |
-
----
-
-## `anthropic` Section
-
-```json
-"anthropic": {
-  "apiKey": "sk-ant-api03-..."
+{
+  agents → list → model        (which AI model to use)
+  channels → telegram → ...    (Telegram settings)
+  gateway → port, auth         (server settings)
+  tools → web → search         (web search settings)
 }
 ```
 
-| Field | Type | Required | Description |
-|-------|------|----------|-------------|
-| `apiKey` | string | ✅ Yes | Your Anthropic API key from console.anthropic.com |
+> 💡 **You usually don't need to edit this file manually.** The onboarding wizard (`openclaw onboard`) and reconfigure command (`openclaw configure`) handle most changes. This guide is for when you need to understand or tweak specific fields.
 
-> 🔒 This is sensitive. Never share this value.
+---
+
+## `agents` Section
+
+The model setting lives inside the agents configuration. For a simple single-agent setup, the onboarding wizard creates this for you.
+
+The model format includes the provider prefix:
+
+| Value | Description |
+|-------|-------------|
+| `"anthropic/claude-haiku-4-5"` | Fastest and cheapest. Good for simple tasks. |
+| `"anthropic/claude-sonnet-4-5"` | ✅ Recommended. Best balance of quality and cost. |
+| `"anthropic/claude-opus-4-5"` | Highest quality, most expensive. For complex work. |
+
+> 💡 To change your model, the easiest way is: `openclaw configure`
+
+---
+
+## `auth` Section
+
+Your API key is stored via an auth profile. The onboarding wizard sets this up securely.
+
+> 🔒 This is sensitive. Never share your API key. If you need to update it, run `openclaw configure`.
 
 ---
 
@@ -84,18 +92,20 @@ The dashboard is accessible at `http://127.0.0.1:[port]/`. Default: http://127.0
 
 ---
 
-## `telegram` Section
+## `channels.telegram` Section
 
-This is where Telegram integration is configured. All fields go inside the `telegram` object.
+Telegram settings live under `channels.telegram` in the config. All fields go inside this nested object.
 
 ```json
-"telegram": {
-  "enabled": true,
-  "botToken": "123456789:ABCdefGHIjklMNOpqrSTUvwxYZ",
-  "dmPolicy": "pairing",
-  "groupPolicy": "enabled",
-  "allowFrom": ["987654321"],
-  "streaming": "words"
+"channels": {
+  "telegram": {
+    "enabled": true,
+    "botToken": "123456789:ABCdefGHIjklMNOpqrSTUvwxYZ",
+    "dmPolicy": "allowlist",
+    "groupPolicy": "allowlist",
+    "allowFrom": [987654321],
+    "streaming": "partial"
+  }
 }
 ```
 
@@ -106,8 +116,8 @@ This is where Telegram integration is configured. All fields go inside the `tele
 | `enabled` | boolean | Yes | `true` to enable Telegram, `false` to disable |
 | `botToken` | string | ✅ Yes | Your bot token from @BotFather. Format: `123456789:ABC...` |
 | `dmPolicy` | string | ✅ Yes | Who can DM the bot. See values below. |
-| `groupPolicy` | string | ✅ Yes | Whether the bot works in group chats. |
-| `allowFrom` | array of strings | Recommended | List of Telegram user IDs allowed to use the bot. |
+| `groupPolicy` | string | ✅ Yes | How the bot handles group chats. See values below. |
+| `allowFrom` | array | Recommended | List of Telegram user IDs allowed to use the bot. |
 | `streaming` | string | No | How responses stream in Telegram. See values below. |
 
 > ⚠️ **`dmPolicy` and `groupPolicy` are REQUIRED.** If either is missing, the config will fail validation.
@@ -122,11 +132,11 @@ Controls who can start a direct message conversation with your bot.
 
 | Value | Behavior |
 |-------|----------|
-| `"pairing"` | ✅ **Recommended.** Only users in `allowFrom` can chat with the bot in DMs. Everyone else is ignored. |
+| `"allowlist"` | ✅ **Recommended.** Only users in `allowFrom` can chat with the bot in DMs. Everyone else is ignored. |
+| `"pairing"` | Users must be approved via a pairing flow before they can chat. |
 | `"open"` | ⚠️ Anyone who finds your bot can start a DM. Do not use this unless you intend a public bot. |
-| `"disabled"` | DMs are disabled entirely. Only group chats work. |
 
-**Always use `"pairing"` for personal use.** It ensures only you (and people you explicitly approve) can use your bot.
+**Use `"allowlist"` for personal use.** It ensures only you (and people you explicitly add to `allowFrom`) can use your bot.
 
 ---
 
@@ -136,15 +146,16 @@ Controls whether and how the bot works in Telegram group chats.
 
 | Value | Behavior |
 |-------|----------|
-| `"enabled"` | Bot participates in group chats where it's a member |
-| `"disabled"` | Bot ignores all group chats |
+| `"allowlist"` | ✅ **Recommended.** Bot only works in groups where users in `allowFrom` are present. |
+| `"open"` | Bot responds in any group it's added to. |
+| `"disabled"` | Bot ignores all group chats. |
 
 ---
 
 ### `allowFrom` — The Access List
 
 ```json
-"allowFrom": ["987654321"]
+"allowFrom": [987654321]
 ```
 
 This is an array (list) of Telegram user IDs. Only users whose ID is in this list can interact with the bot.
@@ -157,7 +168,7 @@ This is an array (list) of Telegram user IDs. Only users whose ID is in this lis
 
 **Adding multiple people:**
 ```json
-"allowFrom": ["987654321", "111222333", "444555666"]
+"allowFrom": [987654321, 111222333, 444555666]
 ```
 
 **If this field is empty or missing:** Combined with `dmPolicy: "open"`, anyone can use your bot.
@@ -166,41 +177,44 @@ This is an array (list) of Telegram user IDs. Only users whose ID is in this lis
 
 ### `streaming` Values
 
-Controls how long responses are delivered in Telegram (streamed word by word, or sent all at once).
+Controls how responses are delivered in Telegram — streamed progressively or sent all at once.
 
 | Value | Behavior |
 |-------|----------|
-| `"words"` | Response appears word by word as it's generated |
-| `"sentences"` | Response appears sentence by sentence |
-| `"full"` | Response sent all at once when complete |
+| `"partial"` | ✅ **Recommended.** Response streams progressively as it's generated. |
+| `"block"` | Response streams in larger blocks (less frequent updates). |
+| `"progress"` | Shows a progress indicator while generating. |
+| `"off"` | Response sent all at once when complete. |
 
-`"words"` gives the most responsive feel but generates more Telegram API calls. All options work fine.
+`"partial"` gives the most responsive feel. All options work fine.
 
 ---
 
 ## Complete Example Config
 
+> 💡 **The onboarding wizard generates this for you.** This is just a reference so you understand the structure.
+
 ```json
 {
-  "model": "claude-sonnet-4-5",
-  "anthropic": {
-    "apiKey": "sk-ant-api03-YOUR-KEY-HERE"
+  "channels": {
+    "telegram": {
+      "enabled": true,
+      "botToken": "123456789:YOUR-BOT-TOKEN-HERE",
+      "dmPolicy": "allowlist",
+      "groupPolicy": "allowlist",
+      "allowFrom": [YOUR_TELEGRAM_USER_ID],
+      "streaming": "partial"
+    }
   },
   "gateway": {
     "port": 18789
-  },
-  "telegram": {
-    "enabled": true,
-    "botToken": "123456789:YOUR-BOT-TOKEN-HERE",
-    "dmPolicy": "pairing",
-    "groupPolicy": "enabled",
-    "allowFrom": ["YOUR-TELEGRAM-USER-ID"],
-    "streaming": "words"
   }
 }
 ```
 
-Replace the placeholder values with your actual keys.
+The actual config file will have additional sections (agents, auth, tools, hooks, etc.) generated by the wizard. You typically only need to manually edit the `channels.telegram` section.
+
+> 💡 **Prefer `openclaw configure` over manual editing** — it validates your changes and prevents typos.
 
 ---
 
@@ -226,9 +240,8 @@ Replace the placeholder values with your actual keys.
 | `"bot_token"` | `"botToken"` |
 | `"allowedUsers"` | `"allowFrom"` |
 | `"allow_from"` | `"allowFrom"` |
-| Missing `dmPolicy` | Add `"dmPolicy": "pairing"` |
-| Missing `groupPolicy` | Add `"groupPolicy": "enabled"` |
-| Telegram user ID as number: `987654321` | Must be string: `"987654321"` |
+| Missing `dmPolicy` | Add `"dmPolicy": "allowlist"` |
+| Missing `groupPolicy` | Add `"groupPolicy": "allowlist"` |
 | Trailing comma on last item | JSON doesn't allow trailing commas |
 
 ---

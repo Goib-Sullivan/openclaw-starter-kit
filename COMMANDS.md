@@ -98,9 +98,14 @@ nano ~/.openclaw/openclaw.json
 
 ---
 
-## 🔄 After Changing Config
+## 🔄 Changing Settings
 
-Whenever you edit `openclaw.json`, run:
+**Preferred method** — guided reconfiguration (no manual JSON editing):
+```bash
+openclaw configure
+```
+
+If you edit `openclaw.json` manually instead, restart after:
 ```bash
 openclaw gateway restart
 ```

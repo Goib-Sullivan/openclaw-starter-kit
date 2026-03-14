@@ -127,8 +127,8 @@ The wizard will walk you through each setting with prompts. Here's what to expec
 | **Anthropic API key** | Your `sk-ant-api03-...` key |
 | **Default model** | `claude-sonnet-4-5` (recommended) or press Enter for default |
 | **Telegram bot token** | Your bot token from @BotFather |
-| **Telegram dmPolicy** | Type `pairing` (keeps strangers out) |
-| **Telegram groupPolicy** | Type `enabled` (allows group chats) |
+| **Telegram dmPolicy** | Choose `allowlist` (keeps strangers out) |
+| **Telegram groupPolicy** | Choose `allowlist` (controlled group access) |
 | **allowFrom** | Your Telegram user ID (e.g., `987654321`) |
 | **Workspace location** | Press Enter to accept default (`~/.openclaw/workspace`) |
 | **Install as daemon** | `y` (runs OpenClaw automatically at startup) |
@@ -209,13 +209,23 @@ You can also chat with your assistant directly from the dashboard — no Telegra
 
 Your workspace is where your assistant's personality, memory, and instructions live. This kit includes starter templates.
 
-First, navigate to the starter kit directory. If you downloaded this kit to your Windows Downloads folder, access it from WSL like this:
+First, navigate to the starter kit directory.
 
+**If you cloned it via git inside WSL** (recommended):
+```bash
+cd ~/openclaw-starter-kit
+```
+
+**If you downloaded the zip to your Windows Downloads folder:**
 ```bash
 cd /mnt/c/Users/YourWindowsUsername/Downloads/openclaw-starter-kit
 ```
+(Replace `YourWindowsUsername` with your actual Windows username.)
 
-> 💡 Replace `YourWindowsUsername` with your actual Windows username.
+> 💡 **Cloning inside WSL is faster and avoids path issues.** From your Ubuntu terminal:
+> ```bash
+> cd ~ && git clone https://github.com/YOUR-REPO/openclaw-starter-kit.git
+> ```
 
 Then run:
 ```bash

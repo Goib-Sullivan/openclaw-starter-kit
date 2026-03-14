@@ -125,8 +125,8 @@ Work through this checklist:
    ```
    Look for `allowFrom`. Your Telegram user ID must be listed there as a string in quotes.
 
-3. **Is `dmPolicy` set to `"pairing"`?**
-   Check your config. If it's `"pairing"`, only users in `allowFrom` get responses.
+3. **Is `dmPolicy` set to `"allowlist"`?**
+   Check your config. If it's `"allowlist"`, only users in `allowFrom` get responses.
 
 4. **Is the bot token correct?**
    ```bash
@@ -144,7 +144,7 @@ Work through this checklist:
 Someone else found your bot and is chatting with it (costing you money).
 
 **Immediate fix:**
-1. Set `dmPolicy: "pairing"` in your config if it isn't already
+1. Set `dmPolicy: "allowlist"` in your config if it isn't already
 2. Set `allowFrom` to contain only your Telegram user ID
 3. Restart: `openclaw gateway restart`
 
@@ -196,11 +196,11 @@ The Telegram section requires both `dmPolicy` AND `groupPolicy`. Make sure both 
 | `dm_policy` | `dmPolicy` |
 | `group_policy` | `groupPolicy` |
 
-**Step 4 — Re-run the onboarding wizard to fix config:**
+**Step 4 — Re-run configuration to fix config:**
 ```bash
-openclaw onboard
+openclaw configure
 ```
-(Without `--install-daemon` — just reconfigures the settings.)
+This walks you through settings again without reinstalling anything. Or use `openclaw onboard` (without `--install-daemon`) for the full wizard.
 
 ---
 

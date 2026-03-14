@@ -43,10 +43,10 @@ The `allowFrom` field in your config controls who can use your bot. Without it, 
 ### How It Works
 
 ```json
-"allowFrom": ["987654321"]
+"allowFrom": [987654321]
 ```
 
-This list contains Telegram user IDs. Only users whose ID is in this list can interact with your bot. Everyone else gets ignored.
+This list contains Telegram user IDs (as numbers). Only users whose ID is in this list can interact with your bot. Everyone else gets ignored.
 
 ### How to Find Your Telegram ID
 
@@ -62,16 +62,16 @@ Open your config and check:
 cat ~/.openclaw/openclaw.json
 ```
 
-Look for the telegram section. It should contain your ID:
+Look for `channels.telegram`. It should contain your ID:
 ```json
-"allowFrom": ["your_telegram_user_id_here"]
+"allowFrom": [your_telegram_user_id_here]
 ```
 
 ### Adding More People
 
 If you want a family member or friend to also use your bot:
 - Have them find their ID using @userinfobot
-- Add their ID to the list: `"allowFrom": ["987654321", "111222333"]`
+- Add their ID to the list: `"allowFrom": [987654321, 111222333]`
 - Edit your config: `nano ~/.openclaw/openclaw.json`
 - Restart the gateway: `openclaw gateway restart`
 
@@ -83,16 +83,17 @@ The `dmPolicy` setting controls who can start a direct message conversation with
 
 | Setting | Behavior |
 |---------|----------|
-| `"pairing"` | ✅ Only approved users (in `allowFrom`) can chat |
+| `"allowlist"` | ✅ Only users in `allowFrom` can chat — **recommended** |
+| `"pairing"` | Users must be approved via a pairing flow before they can chat |
 | `"open"` | ⚠️ Anyone who finds your bot can start a conversation |
 
-**Always use `"pairing"` unless you have a specific reason not to.**
+**Always use `"allowlist"` unless you have a specific reason not to.**
 
 If you accidentally set it to `"open"`, change it:
 ```bash
 nano ~/.openclaw/openclaw.json
 ```
-Find `"dmPolicy"` and change its value to `"pairing"`, then:
+Find `"dmPolicy"` inside `channels.telegram` and change its value to `"allowlist"`, then:
 ```bash
 openclaw gateway restart
 ```
@@ -194,8 +195,7 @@ Add this line:
 
 OpenClaw supports Google Authenticator (TOTP) verification for sensitive operations like modifying system configs, deleting files, or sending messages to external contacts. This is an advanced feature.
 
-If you want this extra layer of protection, see the OpenClaw documentation at:
-[https://openclaw.ai/docs/security/2fa](https://openclaw.ai/docs/security/2fa)
+If you want this extra layer of protection, check the OpenClaw documentation at [https://docs.openclaw.ai](https://docs.openclaw.ai) for the latest security guides.
 
 This is optional but recommended if you're using your assistant for anything involving financial data, important emails, or file deletion.
 
@@ -207,7 +207,7 @@ Do these once during setup, then check monthly:
 
 - [ ] `chmod 600 ~/.openclaw/openclaw.json` — config file is locked down
 - [ ] `allowFrom` contains only your Telegram ID(s)
-- [ ] `dmPolicy` is set to `"pairing"`
+- [ ] `dmPolicy` is set to `"allowlist"`
 - [ ] Monthly spending limit set on Anthropic (recommend $25 to start)
 - [ ] Email alerts configured on Anthropic at 80% of limit
 - [ ] `.gitignore` in place if using git
@@ -217,7 +217,7 @@ Do these once during setup, then check monthly:
 
 ## 🆘 If Something Goes Wrong
 
-**"Someone is using my bot"** → Remove their ID from `allowFrom` immediately, or set `dmPolicy: "pairing"`. Then rotate your bot token in Telegram's @BotFather.
+**"Someone is using my bot"** → Remove their ID from `allowFrom` immediately, or set `dmPolicy: "allowlist"`. Then rotate your bot token in Telegram's @BotFather.
 
 **"I see unexpected Anthropic charges"** → Go to console.anthropic.com → Usage, see what's running. Check your `allowFrom` list. Rotate your API key.
 
