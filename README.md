@@ -43,6 +43,7 @@ This is a sequential process. Each step depends on the one before it. Don't skip
 | 3 | **Set up your workspace** — personality, user profile | After install, run `bash setup-workspace.sh` | ~10 min |
 | 4 | **First 30 minutes** — try it out, learn the basics | [FIRST-STEPS.md](FIRST-STEPS.md) | ~15 min |
 | 5 | **Security hardening** — protect your keys and wallet | [SECURITY.md](SECURITY.md) | ~10 min |
+| 6 | **Local AI (optional)** — run a free model on your computer | [LOCAL-AI-SETUP.md](LOCAL-AI-SETUP.md) | ~15 min |
 
 ---
 
@@ -56,6 +57,7 @@ This is a sequential process. Each step depends on the one before it. Don't skip
 | [SECURITY.md](SECURITY.md) | Protecting your API keys, locking down your bot, budget limits |
 | [COMMANDS.md](COMMANDS.md) | Quick reference card — every important command in one place |
 | [COST-GUIDE.md](COST-GUIDE.md) | What this costs, usage tiers, how to set spending limits |
+| [LOCAL-AI-SETUP.md](LOCAL-AI-SETUP.md) | Run a free AI model on your own computer (optional) |
 | [reference/config-guide.md](reference/config-guide.md) | Configuration file explained field by field |
 | [reference/troubleshooting.md](reference/troubleshooting.md) | Common problems and how to fix them |
 
