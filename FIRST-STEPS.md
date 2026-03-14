@@ -85,7 +85,7 @@ Your assistant will report on its own health — which model it's using, what to
 **What you should see (something like):**
 ```
 🟢 Status: Active
-Model: ollama/qwen3.5:32b
+Model: ollama/qwen3.5:35b
 Tools: exec, read, write...
 Session: [session ID]
 ```

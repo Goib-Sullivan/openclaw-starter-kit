@@ -65,7 +65,7 @@ With your RTX 4090 (24GB VRAM) and 64GB RAM, here's what we recommend:
 ### Primary Model (Install This One)
 
 ```bash
-ollama pull qwen3.5:32b
+ollama pull qwen3.5:35b
 ```
 
 This downloads **Qwen3.5 32B** — the best all-around local model for your hardware. It runs almost entirely on your GPU, which means fast responses. It's excellent at conversation, reasoning, coding help, and writing. The download is about 20GB.
@@ -115,7 +115,7 @@ The download can take 5–30 minutes depending on your internet speed. Just let 
 Before connecting it to OpenClaw, let's make sure it works:
 
 ```bash
-ollama run qwen3.5:32b
+ollama run qwen3.5:35b
 ```
 
 (Replace `32b` with whichever size you downloaded.)
@@ -145,7 +145,7 @@ If `nvidia-smi` shows an error or 0 memory usage, your GPU drivers may need upda
 
 ## Step 4: You're Done Here — Continue the Install
 
-Your local AI is set up and working! Now head back to **[INSTALL-GUIDE.md](INSTALL-GUIDE.md)** and continue with the OpenClaw setup. When the onboarding wizard asks for your model provider, choose **Ollama** and enter `qwen3.5:32b` as the model.
+Your local AI is set up and working! Now head back to **[INSTALL-GUIDE.md](INSTALL-GUIDE.md)** and continue with the OpenClaw setup. When the onboarding wizard asks for your model provider, choose **Ollama** and enter `qwen3.5:35b` as the model.
 
 ### Later: Adding a Cloud Model (Optional Upgrade)
 
@@ -185,9 +185,9 @@ Here's an honest comparison with your RTX 4090 running Qwen3.5 32B:
 | Command | What It Does |
 |---------|-------------|
 | `ollama list` | Show all downloaded models |
-| `ollama run qwen3.5:32b` | Chat directly with a model |
-| `ollama pull qwen3.5:32b` | Download or update a model |
-| `ollama rm qwen3.5:32b` | Delete a model (frees up disk space) |
+| `ollama run qwen3.5:35b` | Chat directly with a model |
+| `ollama pull qwen3.5:35b` | Download or update a model |
+| `ollama rm qwen3.5:35b` | Delete a model (frees up disk space) |
 | `ollama ps` | Show currently running models |
 | `ollama --version` | Check Ollama version |
 
@@ -214,7 +214,7 @@ Then close and reopen your terminal.
 
 Make sure you pulled the model first:
 ```bash
-ollama pull qwen3.5:32b
+ollama pull qwen3.5:35b
 ```
 
 Check the name matches exactly (including the `:32b` part).

@@ -336,13 +336,13 @@ else
     echo -e "${YELLOW}  └──────────────────────────────────────────────────────────┘${NC}"
     echo ""
 
-    if ! ollama pull qwen3.5:32b; then
+    if ! ollama pull qwen3.5:35b; then
         print_fail "Failed to download Qwen3.5 32B."
         print_info ""
         print_info "What to try:"
         print_info "  1. Check your internet connection (this is a 20 GB download)"
         print_info "  2. Check disk space: run 'df -h /' and make sure you have 25+ GB free"
-        print_info "  3. Retry: ollama pull qwen3.5:32b"
+        print_info "  3. Retry: ollama pull qwen3.5:35b"
         print_info "  4. If Ollama isn't running, start it: ollama serve &"
         exit 1
     fi
@@ -365,7 +365,7 @@ if command -v nvidia-smi &>/dev/null; then
         echo ""
         print_info "Running a quick model test (just to confirm everything works)..."
         TEST_RESULT=$(echo "What is 2 plus 2? Answer briefly." | \
-            timeout 60 ollama run qwen3.5:32b --nowordwrap 2>/dev/null | head -3 || true)
+            timeout 60 ollama run qwen3.5:35b --nowordwrap 2>/dev/null | head -3 || true)
         if [[ -n "$TEST_RESULT" ]]; then
             print_ok "Model test passed:"
             echo -e "${GRAY}     $TEST_RESULT${NC}"
@@ -559,7 +559,7 @@ else
 
     ONBOARD_CMD="openclaw onboard --install-daemon --non-interactive \
         --provider ollama \
-        --model qwen3.5:32b \
+        --model qwen3.5:35b \
         --channel telegram \
         --telegram-token \"$BOT_TOKEN\" \
         --telegram-dm-policy allowlist \
@@ -581,7 +581,7 @@ else
         echo -e "${WHITE}  │  ─────────────────────────────────────────────────────  │${NC}"
         echo -e "${WHITE}  │  Model provider         │ Ollama                         │${NC}"
         echo -e "${WHITE}  │  Ollama base URL        │ (press Enter for default)      │${NC}"
-        echo -e "${WHITE}  │  Default model          │ qwen3.5:32b                    │${NC}"
+        echo -e "${WHITE}  │  Default model          │ qwen3.5:35b                    │${NC}"
         echo -e "${WHITE}  │  Telegram bot token     │ ${CYAN}$BOT_TOKEN${WHITE}$(printf '%*s' $((22 - ${#BOT_TOKEN})) '')│${NC}"
         echo -e "${WHITE}  │  Telegram dmPolicy      │ allowlist                      │${NC}"
         echo -e "${WHITE}  │  Telegram groupPolicy   │ allowlist                      │${NC}"
@@ -601,7 +601,7 @@ else
             print_info ""
             print_info "When prompted, use these values:"
             print_info "  Provider: ollama"
-            print_info "  Model: qwen3.5:32b"
+            print_info "  Model: qwen3.5:35b"
             print_info "  Telegram token: $BOT_TOKEN"
             print_info "  Telegram user ID: $USER_ID"
             print_info "  dmPolicy: allowlist"

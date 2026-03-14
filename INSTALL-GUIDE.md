@@ -160,7 +160,7 @@ Here's what to expect and how to answer:
 |--------|--------------|
 | **Model provider** | Choose **Ollama** (your local AI — free!) |
 | **Ollama base URL** | Press Enter to accept default (`http://127.0.0.1:11434`) |
-| **Default model** | `qwen3.5:32b` |
+| **Default model** | `qwen3.5:35b` |
 | **Telegram bot token** | Your bot token from @BotFather |
 | **Telegram dmPolicy** | Choose `allowlist` (keeps strangers out) |
 | **Telegram groupPolicy** | Choose `allowlist` (controlled group access) |
