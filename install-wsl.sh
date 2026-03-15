@@ -328,6 +328,27 @@ else
 fi
 
 # ─────────────────────────────────────────────
+#  Step 3b: Fix GPU compatibility (CUDA v12 override)
+# ─────────────────────────────────────────────
+if step_done "cuda-fix"; then
+    print_ok "GPU compatibility fix already applied — skipping"
+else
+    # Ollama's bundled cuda_v13 crashes on many NVIDIA drivers in WSL2.
+    # Force cuda_v12 which is widely compatible.
+    if command -v nvidia-smi &>/dev/null; then
+        print_step "Applying GPU compatibility fix for WSL2..."
+        sudo mkdir -p /etc/systemd/system/ollama.service.d
+        echo '[Service]
+Environment="OLLAMA_LLM_LIBRARY=cuda_v12"' | sudo tee /etc/systemd/system/ollama.service.d/cuda.conf > /dev/null
+        sudo systemctl daemon-reload 2>/dev/null || true
+        print_ok "GPU fix applied (cuda_v12 override)"
+    else
+        print_info "No NVIDIA GPU detected — skipping GPU fix"
+    fi
+    mark_done "cuda-fix"
+fi
+
+# ─────────────────────────────────────────────
 #  Step 4: Start Ollama service
 # ─────────────────────────────────────────────
 print_step "Starting Ollama service..."
@@ -336,8 +357,12 @@ print_step "Starting Ollama service..."
 if pgrep -x "ollama" > /dev/null 2>&1; then
     print_ok "Ollama is already running"
 else
-    # Start ollama in the background; redirect output so it doesn't clutter terminal
-    ollama serve > /tmp/ollama.log 2>&1 &
+    # Start ollama with cuda_v12 fix if NVIDIA GPU is present
+    if command -v nvidia-smi &>/dev/null; then
+        OLLAMA_LLM_LIBRARY=cuda_v12 ollama serve > /tmp/ollama.log 2>&1 &
+    else
+        ollama serve > /tmp/ollama.log 2>&1 &
+    fi
     OLLAMA_PID=$!
 
     # Wait for it to be ready (up to 15 seconds)
