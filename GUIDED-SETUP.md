@@ -268,12 +268,85 @@ Here's what we need to set up:
    - Set up a simple daily heartbeat cron if they want one
    - Explain: "I can set up scheduled tasks — reminders, daily briefings, automated checks. We can add more later as you discover what's useful."
 
-10. **Final Health Check** — Run these and show the results:
+10. **Backups** — Set up automatic daily backups:
+    - Create a backup script at `~/.openclaw/workspace/scripts/backup.sh`:
+      ```bash
+      #!/bin/bash
+      BACKUP_DIR="$HOME/.openclaw/backups"
+      mkdir -p "$BACKUP_DIR"
+      DATE=$(date +%Y-%m-%d)
+      tar -czf "$BACKUP_DIR/openclaw-backup-$DATE.tar.gz" \
+        -C "$HOME" .openclaw/openclaw.json .openclaw/workspace/ \
+        --exclude='.openclaw/workspace/node_modules' 2>/dev/null
+      # Keep only last 30 days
+      find "$BACKUP_DIR" -name "openclaw-backup-*.tar.gz" -mtime +30 -delete 2>/dev/null
+      echo "Backup saved: $BACKUP_DIR/openclaw-backup-$DATE.tar.gz"
+      ```
+    - Make it executable: `chmod +x ~/.openclaw/workspace/scripts/backup.sh`
+    - Set up a daily cron job to run it at 3 AM
+    - Explain: "This backs up your config and workspace daily. If anything breaks, we can restore from backup. Old backups auto-delete after 30 days."
+
+11. **Teach Key Commands** — Show the user these essential commands with explanations:
+    - `/new` — start a fresh conversation (clears context, keeps memory)
+    - `/reset` — reload workspace files without clearing conversation
+    - `/status` — check model, uptime, and usage stats
+    - `openclaw doctor` — diagnose and fix common issues
+    - `openclaw gateway restart` — restart after config changes
+    - `openclaw gateway stop` / `start` — stop or start the assistant
+    - `openclaw tui` — open the terminal chat interface
+    - Explain context windows: "I can only see the current conversation. If we've been chatting a long time and I start forgetting earlier parts, say `/new` to start fresh. Anything important is saved in MEMORY.md so I'll still know it."
+
+12. **Privacy & Data Awareness** — Explain clearly:
+    - "Everything runs on YOUR computer. Your conversations, your files, your data — none of it leaves this machine unless you explicitly ask me to search the web or connect to an external service."
+    - "The Qwen3.5 model running on your GPU processes everything locally. No data is sent to any company."
+    - "If you ever add a cloud model (like Anthropic Claude), those conversations DO go to their servers. But the local model is always available as a private fallback."
+    - "Your Telegram messages go through Telegram's servers to reach me, but I process and respond locally."
+
+13. **"What Can I Do?" Starter Ideas** — Give the user inspiration:
+    - "Ask me to help you write emails, reports, or messages"
+    - "Ask me to research topics — I can search the web and summarize what I find"
+    - "Ask me to help with code if you're learning programming"
+    - "Set reminders — 'remind me to call Mom at 5 PM tomorrow'"
+    - "Ask me to read and summarize articles — just paste a URL"
+    - "Ask me to help you brainstorm or think through decisions"
+    - "Ask me to help organize your thoughts on any topic"
+    - "Tell me to remember things — 'remember that my WiFi password is...'"
+    - "Ask me to set up scheduled tasks — daily briefings, recurring reminders"
+    - "Just talk to me — I'm here to help with whatever comes up"
+
+14. **Troubleshooting Quick Reference** — Add to AGENTS.md:
+    - If I stop responding: user should run `openclaw gateway restart` in Ubuntu
+    - If Ubuntu closes unexpectedly: reopen from Start menu, run `OLLAMA_LLM_LIBRARY=cuda_v12 ollama serve &` then `openclaw gateway start`
+    - If I give wrong answers: say "that's wrong" — I'll correct and log the lesson
+    - If something seems broken: run `openclaw doctor` and show me the output
+    - If the model is too slow: check if Ollama is using GPU with `ollama ps`
+    - "You can always restart me. I don't lose anything important — it's all saved in files."
+
+15. **WSL Auto-Start** — Set up Ollama and OpenClaw to start automatically when Windows boots:
+    - Create a startup script at `~/.openclaw/workspace/scripts/startup.sh`:
+      ```bash
+      #!/bin/bash
+      # Start Ollama with GPU fix
+      OLLAMA_LLM_LIBRARY=cuda_v12 ollama serve > /tmp/ollama.log 2>&1 &
+      sleep 5
+      # Start OpenClaw
+      openclaw gateway start
+      ```
+    - Make it executable: `chmod +x ~/.openclaw/workspace/scripts/startup.sh`
+    - Add to `.bashrc` or create a Windows Task Scheduler entry so it runs on login
+    - Explain: "This means your assistant is always ready when you turn on your computer. You won't need to manually start anything — just open Telegram and say hi."
+
+16. **Final Health Check** — Run these and show the results:
     ```bash
     openclaw doctor
     openclaw status
+    ollama ps
     ```
-    Fix any issues that come up. Explain what each warning means in plain language.
+    Fix any issues. Explain each warning in plain language. Confirm:
+    - Model is loaded and running on GPU
+    - Telegram is connected
+    - No critical warnings
+    - 2FA is working (have them verify with a test code)
 
 After each section, show me what you wrote and ask if I want to change anything. When we're done with all sections, tell me to restart you with:
 
@@ -293,7 +366,7 @@ Your assistant will:
 3. Show you what it wrote so you can approve or tweak it
 4. Tell you to restart when everything's done
 
-The whole conversation takes about **15-20 minutes**.
+The whole conversation takes about **20-30 minutes** — worth every minute.
 
 ---
 
@@ -329,6 +402,9 @@ You can always edit these files later by telling your assistant:
 | `TOOLS.md` | Local environment notes — devices, servers, services |
 | `LESSONS.md` | Self-improvement log — mistakes learned, better approaches |
 | `memory/` | Daily note directory — raw logs of each day's work |
+| `scripts/totp-verify.py` | 2FA verification script for Google Authenticator |
+| `scripts/backup.sh` | Daily automatic backup script |
+| `scripts/startup.sh` | Auto-start script for Ollama + OpenClaw on boot |
 
 These files live in `~/.openclaw/workspace/` and you own them completely.
 
@@ -340,3 +416,6 @@ These files live in `~/.openclaw/workspace/` and you own them completely.
 - **You can't break anything.** If you don't like what it wrote, just say "change it."
 - **Start simple.** You can always add more detail later as you figure out what you want.
 - **Have fun with it.** This is YOUR assistant. Make it weird, make it professional, make it whatever you want.
+- **It gets better over time.** As LESSONS.md and MEMORY.md grow, your assistant becomes increasingly personalized. The first week is good. The first month is great.
+- **You can always restart.** `openclaw gateway restart` fixes most issues. Nothing important is lost — it's all in files.
+- **Talk to it like a person.** Don't worry about "correct" commands or phrasing. Just say what you need.
