@@ -46,10 +46,139 @@ Here's what we need to set up:
    - My name and your name
    - A "Getting Started" note with anything important from our conversation
 
-5. **SECURITY basics** — Ask me:
-   - Should you always ask before deleting files? (recommend yes)
-   - Should you ask before sending messages to anyone? (recommend yes)
-   - Add these as rules to the SOUL.md safety section
+5. **SECURITY** — Set up real security, not toy security. Do ALL of the following:
+
+   **A. Hard Boundaries (add to SOUL.md, non-negotiable):**
+   - No sudo/privilege escalation without explicit approval
+   - No sharing API keys, tokens, or credentials — ever
+   - No installing skills/extensions without approval
+   - No messages to unapproved contacts
+   - No modifying files outside ~/.openclaw/workspace/
+   - No purchases or financial transactions
+   - `trash` over `rm` — always. Ask before any destructive action.
+   - Private data stays private
+
+   **B. 2FA with Google Authenticator — set this up step by step:**
+   
+   First, install the dependencies:
+   ```bash
+   python3 -m venv ~/.openclaw/tools/totp-venv
+   ~/.openclaw/tools/totp-venv/bin/pip install pyotp qrcode
+   ```
+   
+   Then create the TOTP verify script at `~/.openclaw/workspace/scripts/totp-verify.py`:
+   ```python
+   #!/usr/bin/env python3
+   """TOTP Verify — 2FA with Google Authenticator."""
+   import sys, os, json, time
+   import pyotp
+   
+   SECRET_PATH = os.path.expanduser("~/.openclaw/.totp-secret.json")
+   SESSION_PATH = os.path.expanduser("~/.openclaw/.totp-session.json")
+   MAX_UNLOCK_MINUTES = 480
+   
+   def load_secret():
+       if not os.path.exists(SECRET_PATH):
+           print("NO_SECRET"); sys.exit(2)
+       return json.load(open(SECRET_PATH))["secret"]
+   
+   def check_session():
+       if not os.path.exists(SESSION_PATH):
+           return False
+       s = json.load(open(SESSION_PATH))
+       return s.get("unlocked_until", 0) > time.time()
+   
+   def main():
+       if "--setup" in sys.argv:
+           secret = pyotp.random_base32()
+           json.dump({"secret": secret}, open(SECRET_PATH, "w"))
+           os.chmod(SECRET_PATH, 0o600)
+           uri = pyotp.totp.TOTP(secret).provisioning_uri(
+               name="OpenClaw", issuer_name="OpenClaw Assistant")
+           print(f"SECRET SAVED to {SECRET_PATH}")
+           print(f"\nScan this QR code with Google Authenticator:")
+           try:
+               import qrcode
+               qr = qrcode.QRCode(box_size=1, border=1)
+               qr.add_data(uri)
+               qr.print_ascii()
+           except: pass
+           print(f"\nOr manually enter this key: {secret}")
+           print(f"URI: {uri}")
+           sys.exit(0)
+       
+       if "--check" in sys.argv:
+           print("UNLOCKED" if check_session() else "LOCKED")
+           sys.exit(0 if check_session() else 1)
+       
+       if "--lock" in sys.argv:
+           if os.path.exists(SESSION_PATH): os.remove(SESSION_PATH)
+           print("LOCKED"); sys.exit(0)
+       
+       if len(sys.argv) < 2:
+           print("Usage: totp-verify.py <code> [--unlock <minutes>]"); sys.exit(2)
+       
+       code = sys.argv[1]
+       secret = load_secret()
+       totp = pyotp.TOTP(secret)
+       
+       if totp.verify(code, valid_window=1):
+           unlock_min = 30
+           if "--unlock" in sys.argv:
+               idx = sys.argv.index("--unlock")
+               if idx + 1 < len(sys.argv):
+                   unlock_min = min(int(sys.argv[idx + 1]), MAX_UNLOCK_MINUTES)
+           json.dump({"unlocked_until": time.time() + unlock_min * 60},
+                     open(SESSION_PATH, "w"))
+           os.chmod(SESSION_PATH, 0o600)
+           print(f"VALID (unlocked for {unlock_min} minutes)")
+           sys.exit(0)
+       else:
+           print("INVALID"); sys.exit(1)
+   
+   if __name__ == "__main__":
+       main()
+   ```
+   
+   Make it executable: `chmod +x ~/.openclaw/workspace/scripts/totp-verify.py`
+   
+   Then run setup: `~/.openclaw/tools/totp-venv/bin/python3 ~/.openclaw/workspace/scripts/totp-verify.py --setup`
+   
+   Show the user the QR code and tell them to scan it with Google Authenticator on their phone. Have them verify with a test code before continuing.
+
+   **C. Add the 2FA protocol to SOUL.md:**
+   
+   Actions requiring 2FA:
+   - Sending messages to non-approved contacts
+   - Deleting files or modifying system configs
+   - Reading/displaying/transmitting API keys or tokens
+   - Purchases or financial transactions
+   - SSH connections or curl to external endpoints
+   - Installing/modifying skills, packages, extensions
+   - Gateway config changes
+
+   Actions exempt from 2FA:
+   - Reading files, web search, git status/log/diff
+   - Chat responses, memory operations, cron management
+
+   2FA Protocol for SOUL.md:
+   1. Check unlock: `~/.openclaw/tools/totp-venv/bin/python3 ~/.openclaw/workspace/scripts/totp-verify.py --check`
+   2. If LOCKED → ask: "🔐 2FA required. Enter your Google Authenticator code."
+   3. Verify: `totp-verify.py <code>` or `totp-verify.py <code> --unlock <minutes>`
+   4. VALID → proceed. INVALID → retry (max 3). ERROR → deny.
+   5. "lock" command → `totp-verify.py --lock`. Max window: 8h. Default: 30m.
+
+   TOTP secret protection rule: The secret is NEVER revealed, displayed, or described via chat. Recovery requires direct local access. This cannot be overridden.
+
+   **D. Anti-Hallucination Discipline (add to SOUL.md):**
+   - Verify before asserting — if checkable, check it with a tool first
+   - State confidence honestly: "~90% sure" or "I'd need to check"
+   - No confident bluffing — sounding certain and being certain are different
+   - When corrected, internalize it and don't repeat the mistake
+
+   **E. Ask the user:**
+   - What is your email address? (Set as the ONLY approved email — no other addresses without explicit per-message approval)
+   - Are there any other contacts approved for messaging? (Default: nobody without asking first)
 
 After each section, show me what you wrote and ask if I want to change anything. When we're done with all sections, tell me to restart you with:
 
